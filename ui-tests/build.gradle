@@ -1,0 +1,28 @@
+ext {
+    testNgVesrion = '6.14.3'
+    selenideVersion = '5.1.0'
+    allureSelenideVersion = '2.9.0'
+    hamcrestVersion = '1.3'
+}
+
+dependencies {
+    implementation "com.codeborne:selenide:$selenideVersion"
+    implementation "io.qameta.allure:allure-selenide:$allureSelenideVersion"
+    testImplementation "org.testng:testng:$testNgVesrion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+}
+
+test {
+    useTestNG()
+
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+        exceptionFormat = 'full'
+    }
+}
+
+allure {
+    version = '2.5.0'
+    aspectjweaver = true
+    autoconfigure = true
+}
