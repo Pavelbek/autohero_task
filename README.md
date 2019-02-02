@@ -9,7 +9,7 @@
 
 ## How to:
 
-1. Go to test-task folder
+1. Go to "test-task" folder
 1. Run: ./gradlew clean
 1. Run: ./gradlew ui-tests:test
 1. Run: ./gradlew ui-tests:allureReport
