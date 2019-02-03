@@ -2,6 +2,7 @@ package com.autohero.ui.tests;
 
 import com.autohero.ui.enums.CarsSortingTypes;
 import com.autohero.ui.pages.SearchPage;
+import io.qameta.allure.Step;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
@@ -25,19 +26,21 @@ public class SearchCarTest extends BaseTest {
                 .filterCarsByFirstRegistrationFrom(yearToSelect)
                 .sortCarsByType(CarsSortingTypes.HOCHSTER_PREIS);
 
-        //then
         int actualMinimalYear = at(SearchPage.class).getMinimalRegistrationYearDisplayed();
-        List<Float> carsPricesAfterSorting = at(SearchPage.class).getCarPrices();
+        List<Float> carsPricesAfterSorting = at(SearchPage.class).getCarsPrices();
 
+        //then
         assertMinimalRegistrationYearDisplayedIsCorrect(actualMinimalYear, Integer.parseInt(yearToSelect));
         assertPricesAreSortedInDescOrder(carsPricesAfterSorting);
     }
 
+    @Step
     private void assertMinimalRegistrationYearDisplayedIsCorrect(int actualMinimalYear, int expectedMinimalYear){
         assertThat("Actual: " + actualMinimalYear +  ", Expected: " + expectedMinimalYear, actualMinimalYear, greaterThanOrEqualTo(expectedMinimalYear));
 
     }
 
+    @Step
     private void assertPricesAreSortedInDescOrder(List<Float> elementsToCheck){
         assertTrue(elementsToCheck.equals(elementsToCheck.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList())), "Prices are not sorted in descendant order.");
     }

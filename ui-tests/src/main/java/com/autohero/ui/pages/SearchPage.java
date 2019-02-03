@@ -5,6 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import java.util.Collections;
@@ -26,31 +27,20 @@ public class SearchPage extends BasePage{
     private ElementsCollection carPrices = $$("div[data-qa-selector=price]");
 
 
+    @Step
     public static SearchPage open(){
         return Selenide.open(PAGE_PATH, SearchPage.class);
     }
 
+    @Step
     public SearchPage filterCarsByFirstRegistrationFrom(String yearFrom){
-        clickFirstRegistrationFromLink().openRegistrationYearSelectBox();
+        clickFirstRegistrationFromLink();
+        openRegistrationYearSelectBox();
         clickRegistrationFromYearValue(yearFrom);
         return this;
     }
 
-    public SearchPage clickFirstRegistrationFromLink(){
-        firstRegistrationFromLink.click();
-        return this;
-    }
-
-    public SearchPage openRegistrationYearSelectBox(){
-        registrationYearsSelectBox.click();
-        return this;
-    }
-
-    public SearchPage clickRegistrationFromYearValue(String yearFrom){
-        registrationYearsSelectBox.selectOption(yearFrom);
-        return this;
-    }
-
+    @Step
     public int getMinimalRegistrationYearDisplayed(){
         Set<Integer> uniqueYears = registrationDates
                 .stream()
@@ -59,27 +49,45 @@ public class SearchPage extends BasePage{
         return Collections.min(uniqueYears);
     }
 
-    public SearchPage openSortBySelectBox(){
-        sortBySelectBox.shouldBe(Condition.visible).click();
-        return this;
-    }
-
-    public SearchPage selectSortingTypeByText(String sortingType){
-        sortBySelectBox.shouldBe(Condition.visible).selectOption(sortingType);
-        return this;
-    }
-
+    @Step
     public SearchPage sortCarsByType(CarsSortingTypes sortingType){
         openSortBySelectBox();
         selectSortingTypeByText(sortingType.getSortingType());
-        Selenide.sleep(1000);
+        sleepForSeconds(1);
         return this;
     }
 
-    public List<Float> getCarPrices(){
+    @Step
+    public List<Float> getCarsPrices(){
         return carPrices
                 .stream()
                 .map(x -> Float.valueOf(x.text().replaceAll("\\D+", "")))
                 .collect(Collectors.toList());
+    }
+
+    //private methods
+    private SearchPage clickFirstRegistrationFromLink(){
+        firstRegistrationFromLink.click();
+        return this;
+    }
+
+    private SearchPage openRegistrationYearSelectBox(){
+        registrationYearsSelectBox.click();
+        return this;
+    }
+
+    private SearchPage clickRegistrationFromYearValue(String yearFrom){
+        registrationYearsSelectBox.selectOption(yearFrom);
+        return this;
+    }
+
+    private SearchPage openSortBySelectBox(){
+        sortBySelectBox.shouldBe(Condition.visible).click();
+        return this;
+    }
+
+    private SearchPage selectSortingTypeByText(String sortingType){
+        sortBySelectBox.shouldBe(Condition.visible).selectOption(sortingType);
+        return this;
     }
 }

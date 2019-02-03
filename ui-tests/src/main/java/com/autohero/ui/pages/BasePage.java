@@ -1,12 +1,8 @@
 package com.autohero.ui.pages;
 
 import com.autohero.ui.utils.WebDriverManager;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,7 +10,7 @@ import static com.autohero.ui.utils.WebDriverManager.getDriver;
 
 public class BasePage {
 
-    public boolean waitForJsAndJQueryToLoad() {
+    protected boolean waitForJsAndJQueryToLoad() {
 
         WebDriverWait wait = new WebDriverWait(WebDriverManager.getDriver(), 10);
 
@@ -34,5 +30,9 @@ public class BasePage {
                 .toString().equals("complete");
 
         return wait.until(jQueryLoad) && wait.until(jsLoad);
+    }
+
+    protected void sleepForSeconds(int seconds){
+        Selenide.sleep(seconds * 1000);
     }
 }

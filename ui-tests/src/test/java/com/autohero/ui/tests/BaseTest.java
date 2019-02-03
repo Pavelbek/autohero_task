@@ -21,7 +21,6 @@ public class BaseTest {
         WebDriverRunner.setWebDriver(driver);
         driver.manage().window().maximize();
         Configuration.baseUrl = PropertyReader.getProperty("baseUrl");
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
     }
 
     @AfterTest(alwaysRun = true)
