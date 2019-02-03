@@ -2,10 +2,10 @@
 
 ## Technologies
 
-* Programming language: Java 1.8
-* Build tool: Gradle 5.0
-* Automation framework: Selenide
-* Reporting tool: Allure 2
+* **Programming language:** Java 1.8
+* **Build tool:** Gradle 5.0
+* **Automation framework:** Selenide
+* **Reporting tool:** Allure 2
 
 ## How to:
 
